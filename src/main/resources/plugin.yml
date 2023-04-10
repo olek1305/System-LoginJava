@@ -1,0 +1,23 @@
+name: untitled
+version: '${project.version}'
+main: org.main.Arcy_RPG
+api-version: 1.19
+
+commands:
+  shop:
+    description: Otwórz sklep
+    usage: /shop
+
+permissions:
+  arcy.shop:
+    description: Umożliwia dostęp do sklepu
+    default: true
+  arcy.player:
+    description: Umożliwia dostęp do funkcjonalności dla graczy
+    default: true
+  arcy.mod:
+    description: Umożliwia dostęp do funkcjonalności dla moderatorów
+    default: op
+  arcy.admin:
+    description: Umożliwia dostęp do funkcjonalności dla administratorów
+    default: op
