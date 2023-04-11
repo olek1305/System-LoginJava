@@ -1,23 +1,13 @@
-name: untitled
+name: Arcy_RPG
 version: '${project.version}'
 main: org.main.Arcy_RPG
 api-version: 1.19
 
 commands:
-  shop:
-    description: Otwórz sklep
-    usage: /shop
+   gui:
+      description: Otwórz GUI
+      usage: /gui
+   arcycoins:
+      description: Wyświetla ilość posiadanych ArcyCoins
+      usage: /<command>
 
-permissions:
-  arcy.shop:
-    description: Umożliwia dostęp do sklepu
-    default: true
-  arcy.player:
-    description: Umożliwia dostęp do funkcjonalności dla graczy
-    default: true
-  arcy.mod:
-    description: Umożliwia dostęp do funkcjonalności dla moderatorów
-    default: op
-  arcy.admin:
-    description: Umożliwia dostęp do funkcjonalności dla administratorów
-    default: op

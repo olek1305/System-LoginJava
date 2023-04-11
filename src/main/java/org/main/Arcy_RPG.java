@@ -1,34 +1,40 @@
 package org.main;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.main.shop.ShopGUI;
+import java.sql.SQLException;
+
+
+import org.main.commands.ArcyCoinsCommand;
+import org.main.commands.GUICommand;
+import org.main.commands.MyCommandExecutor;
+import org.main.events.PlayerJoinListener;
+import org.main.idle.ArcyCoins;
+import org.main.idle.ZombieListener;
+
 
 public final class Arcy_RPG extends JavaPlugin {
-    private ShopGUI shopGUI;
 
     @Override
     public void onEnable() {
         getLogger().info("Arcy_RPG enabled.");
-        // Initialize the ShopGUI object
-        shopGUI = new ShopGUI(this);
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("Arcy_RPG disabled.");
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("shop") && sender instanceof Player) {
-            Player player = (Player) sender;
-            // Open the shop GUI using the ShopGUI object
-            shopGUI.open(player);
-            return true;
+        try {
+            ArcyCoins.connect();
+            ArcyCoins.createTableIfNotExists();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return false;
-    }
+
+            getCommand("gui").setExecutor(new GUICommand());
+            getServer().getPluginManager().registerEvents(new ZombieListener(this), this);
+            getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+            this.getCommand("arcycoins").setExecutor(new ArcyCoinsCommand(this));
+        }
+        @Override
+        public void onDisable () {
+            getLogger().info("Arcy_RPG disabled.");
+        }
 }
