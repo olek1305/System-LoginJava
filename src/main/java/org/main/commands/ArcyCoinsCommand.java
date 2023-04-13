@@ -5,8 +5,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.main.idle.ArcyCoins;
+import org.main.API.MyCommandExecutor;
+import org.main.API.MySQLAPI;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ArcyCoinsCommand implements CommandExecutor {
@@ -25,14 +29,14 @@ public class ArcyCoinsCommand implements CommandExecutor {
             if (MyCommandExecutor.cooldowns.containsKey(player)) {
                 MyCommandExecutor.Cooldown cooldown = MyCommandExecutor.cooldowns.get(player);
                 if (cooldown.isOnCooldown()) {
-                    player.sendMessage("Musisz poczekać jeszcze " + cooldown.getTimeLeft() + " sekund przed użyciem tej komendy.");
+                    player.sendMessage("You still have to wait " + cooldown.getTimeLeft() + " seconds before using this command.");
                     return true;
                 }
             }
 
             try {
-                int coins = ArcyCoins.getCoins(player);
-                player.sendMessage("Posiadasz " + coins + " ArcyCoins.");
+                int coins = getCoins(player);
+                player.sendMessage("You have " + coins + " ArcyCoins.");
 
                 // ustawienie cooldownu na 32 sekund, mozna inaczej wpisac
                 // new MyCommandExecutor.Cooldown(32 * 1000);
@@ -41,11 +45,31 @@ public class ArcyCoinsCommand implements CommandExecutor {
                 MyCommandExecutor.cooldowns.put(player, cooldown);
             } catch (SQLException e) {
                 e.printStackTrace();
-                player.sendMessage("Wystąpił błąd podczas pobierania Twojego stanu konta.");
+                player.sendMessage("An error occurred while downloading your account balance.");
             }
         } else {
-            sender.sendMessage("Ta komenda jest dostępna tylko dla graczy.");
+            sender.sendMessage("This command is only available to players.");
         }
         return true;
+    }
+
+    public static int getCoins(Player player) throws SQLException {
+        String playerName = player.getName();
+        String checkPlayerExistsQuery = "SELECT coins FROM arcycoins WHERE player_name = ?;";
+
+        try (Connection connection = MySQLAPI.getConnection();
+             PreparedStatement statement = connection.prepareStatement(checkPlayerExistsQuery)) {
+            statement.setString(1, playerName);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int coins = resultSet.getInt("coins");
+                return coins;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

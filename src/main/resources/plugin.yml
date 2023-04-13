@@ -10,4 +10,11 @@ commands:
    arcycoins:
       description: Wyświetla ilość posiadanych ArcyCoins
       usage: /<command>
-
+   register:
+      description: Rejestruje gracza z tokenem
+      usage: /register <token>
+permissions:
+   arcy.register:
+      description: Allows the player to register with a token.
+      usage: /register
+      default: true

@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class GUICommand implements CommandExecutor {
 
@@ -52,7 +53,7 @@ public class GUICommand implements CommandExecutor {
             ItemStack buyButton = new ItemStack(Material.EMERALD_BLOCK);
             ItemMeta buyButton_meta = buyButton.getItemMeta();
             buyButton_meta.setDisplayName(ChatColor.GREEN + "Kup");
-            buyButton_meta.setLore(Arrays.asList(ChatColor.GRAY + "Kupuje wybrany przedmiot"));
+            buyButton_meta.setLore(Collections.singletonList(ChatColor.GRAY + "Kupuje wybrany przedmiot"));
             buyButton.setItemMeta(buyButton_meta);
 
             shopGUI.setItem(26, buyButton);

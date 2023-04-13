@@ -1,4 +1,4 @@
-package org.main.commands;
+package org.main.API;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyCommandExecutor implements CommandExecutor {
-    //Ta klasa robi cooldown
+    //Powyzej klasa robi cooldown komend
     public static final Map<Player, Cooldown> cooldowns = new HashMap<>();
     public static long COOLDOWN_TIME = 30 * 1000; // 30 sekund w milisekundach
 
