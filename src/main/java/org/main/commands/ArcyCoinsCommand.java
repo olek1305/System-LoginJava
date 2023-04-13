@@ -20,11 +20,15 @@ public class ArcyCoinsCommand implements CommandExecutor {
     public ArcyCoinsCommand(Plugin plugin) {
         this.plugin = plugin;
     }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+
+            if (args.length > 0) {
+                player.sendMessage("This command doesn't accept any arguments.");
+                return true;
+            }
 
             if (MyCommandExecutor.cooldowns.containsKey(player)) {
                 MyCommandExecutor.Cooldown cooldown = MyCommandExecutor.cooldowns.get(player);
@@ -38,8 +42,6 @@ public class ArcyCoinsCommand implements CommandExecutor {
                 int coins = getCoins(player);
                 player.sendMessage("You have " + coins + " ArcyCoins.");
 
-                // ustawienie cooldownu na 32 sekund, mozna inaczej wpisac
-                // new MyCommandExecutor.Cooldown(32 * 1000);
                 MyCommandExecutor.Cooldown cooldown = new MyCommandExecutor.Cooldown(MyCommandExecutor.COOLDOWN_TIME);
                 cooldown.setCooldown();
                 MyCommandExecutor.cooldowns.put(player, cooldown);
@@ -52,6 +54,7 @@ public class ArcyCoinsCommand implements CommandExecutor {
         }
         return true;
     }
+
 
     public static int getCoins(Player player) throws SQLException {
         String playerName = player.getName();

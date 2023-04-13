@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import org.main.commands.ArcyCoinsCommand;
-import org.main.commands.GUICommand;
 import org.main.commands.RegisterCommand;
 import org.main.events.PlayerJoinListener;
 
@@ -28,10 +27,9 @@ public final class Arcy_RPG extends JavaPlugin {
             throw new RuntimeException(e);
         }
 
-        getCommand("gui").setExecutor(new GUICommand());
         getCommand("register").setExecutor(new RegisterCommand(this));
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        this.getCommand("arcycoins").setExecutor(new ArcyCoinsCommand(this));
+        getCommand("arcycoins").setExecutor(new ArcyCoinsCommand(this));
 
         startTokenCleanupTask();
     }
