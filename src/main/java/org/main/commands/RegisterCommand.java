@@ -52,7 +52,7 @@ public class RegisterCommand implements CommandExecutor {
             }
         }
 
-        if (!player.hasPermission("arcy.register")) {
+        if (!player.hasPermission("systemLogin.register")) {
             player.sendMessage("You don't have permission to use this command.");
             return true;
         }
@@ -71,7 +71,7 @@ public class RegisterCommand implements CommandExecutor {
             player.sendMessage("Your registration token is: " + token);
 
             // Create a link with the token
-            String registrationUrl = "http://site24541.web1.titanaxe.com/register?token=" + token;
+            String registrationUrl = "http://TuLink/register?token=" + token;
             TextComponent linkMessage = new TextComponent("Click here to register with a token.");
             linkMessage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, registrationUrl));
             linkMessage.setColor(net.md_5.bungee.api.ChatColor.GREEN);
@@ -85,7 +85,7 @@ public class RegisterCommand implements CommandExecutor {
         cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
 
         // Check for permission
-        if (!player.hasPermission("arcy.register")) {
+        if (!player.hasPermission("systemLogin.register")) {
             player.sendMessage("You do not have permission to use this command.");
             return true;
         }

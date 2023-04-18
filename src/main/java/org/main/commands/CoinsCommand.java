@@ -13,11 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArcyCoinsCommand implements CommandExecutor {
+public class CoinsCommand implements CommandExecutor {
 
     private Plugin plugin;
 
-    public ArcyCoinsCommand(Plugin plugin) {
+    public CoinsCommand(Plugin plugin) {
         this.plugin = plugin;
     }
     @Override

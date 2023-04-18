@@ -5,7 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
 
 import org.bukkit.scheduler.BukkitRunnable;
-import org.main.commands.ArcyCoinsCommand;
+import org.main.commands.CoinsCommand;
+import org.main.commands.HelpCommand;
 import org.main.commands.RegisterCommand;
 import org.main.events.PlayerJoinListener;
 
@@ -20,16 +21,23 @@ public final class Arcy_RPG extends JavaPlugin {
         try {
             connect();
         } catch (SQLException e) {
+            getLogger().severe("Failed to connect to the database. Check your connection settings.");
             e.printStackTrace();
             getServer().getPluginManager().disablePlugin(this);
             return;
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            getLogger().severe("MariaDB Driver not found. Disabling the plugin.");
+            e.printStackTrace();
+            getServer().getPluginManager().disablePlugin(this);
+            return;
         }
+
+
 
         getCommand("register").setExecutor(new RegisterCommand(this));
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getCommand("arcycoins").setExecutor(new ArcyCoinsCommand(this));
+        //getCommand("coins").setExecutor(new CoinsCommand(this));
+        getCommand("help").setExecutor(new HelpCommand());
 
         startTokenCleanupTask();
     }
