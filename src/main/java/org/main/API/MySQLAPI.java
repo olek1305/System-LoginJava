@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class MySQLAPI {
 
-    private static final String DATABASE_URL = "jdbc:mariadb://10.10.1.31:3306/siecmc_main";
-    private static final String DATABASE_USER = "siecmc_master";
-    private static final String DATABASE_PASSWORD = "o9ubq9gn3o40ibg50qni4nh50g3n5hb";
+    private static final String DATABASE_URL = "jdbc:mariadb://ip:3306/database";
+    private static final String DATABASE_USER = "user";
+    private static final String DATABASE_PASSWORD = "password";
     private static Connection connection;
 
     public static void connect() throws SQLException, ClassNotFoundException {
